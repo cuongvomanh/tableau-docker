@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tableau
+  labels:
+    app: etc
+    module: tableau
+spec:
+  selector:
+    matchLabels:
+      app: etc
+      module: tableau
+  template:
+    metadata:
+      labels:
+        app: etc
+        module: tableau
+    spec:
+      containers:
+#      - image: 10.60.156.72/etc/tableau:1.0
+      - image: 10.60.156.72/hddt/pvtmert/tableau:2019.1.17.oracle.1
+        name: tableau
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 8085
+      imagePullSecrets:
+      - name: regcred
+      # volumes:
+      # - name: tz-config
+      #   hostPath:
+      #     path: /etc/localtime
+      # - name: production-config-file
+      #   configMap:
+      #     name: crm-backend-configmap
